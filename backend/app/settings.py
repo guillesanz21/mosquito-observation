@@ -26,8 +26,7 @@ SECRET_KEY = 'django-insecure-a29m%q4djak(_9#+ulzsa+qjo_k%ulv^*_z$ul)@gr#6x*tkd2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-ALLOWED_HOSTS.append(os.environ.get('ALLOWED_HOSTS', 'localhost').split(','))
+ALLOWED_HOSTS = ["*"]  # TODO: Improve
 
 
 # Application definition
@@ -126,3 +125,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
