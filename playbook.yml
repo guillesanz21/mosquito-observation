@@ -1,0 +1,44 @@
+---
+- name: Prepare Ubuntu 22.04 to run the Mosquito Observation System Identification APP
+  hosts: all
+  become: true
+  tasks:
+    - name: Update apt package
+      apt:
+        update_cache: yes
+
+    - name: Install required packages
+      apt:
+        name:
+          - ca-certificates
+          - curl
+          - git
+        state: present
+
+    - name: Add Docker's official GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add the repository to Apt sources
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu jammy stable
+        state: present
+
+    - name: Install Docker and Docker Compose
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: latest
+        update_cache: true
+
+    - name: Clone repository
+      git:
+        clone: true
+        repo: "https://github.com/guillesanz21/mosquito-observation"
+        version: main
+        dest: /usr/app
