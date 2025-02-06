@@ -14,3 +14,4 @@ class ObservationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Observation
         fields = '__all__'
+        read_only_fields = ['id', 'timestamp']
