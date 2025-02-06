@@ -1,0 +1,29 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: mosquito_identification.backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - /app:/user/app
+    environment:
+      - ALLOWED_HOSTS=localhost
+    command: >
+      sh -c "python manage.py migrate && python manage.py runserver"
+
+
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #   container_name: mosquito_identification.frontend
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - /app:/user/app
+  #   environment:
+  #     - REACT_APP_API_URL=http://localhost:8000
+  #   command: >
+  #     sh -c "npm start"
+  #   depends_on:
+  #     - backend
