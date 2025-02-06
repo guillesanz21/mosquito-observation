@@ -2,15 +2,16 @@ services:
   backend:
     build:
       context: ./backend
-    container_name: mosquito_identification.backend
+    container_name: backend
+    hostname: backend
     ports:
       - "8000:8000"
     volumes:
-      - /app:/user/app
+      - ./backend:/usr/backend
     environment:
       - ALLOWED_HOSTS=localhost
     command: >
-      sh -c "python manage.py migrate && python manage.py runserver"
+      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
 
 
   # frontend:

@@ -1,3 +1,6 @@
+"""
+Models for the observation API.
+"""
 from django.db import models
 
 # Create your models here.

@@ -10,4 +10,3 @@ EXPOSE 8000
 RUN pip install -r ./requirements.txt
 
 ENV PATH="/py/bin:$PATH"
-
