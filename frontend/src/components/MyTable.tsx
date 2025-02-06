@@ -4,9 +4,10 @@ import { Observation } from '../pages/Home';
 
 type MyTableProps = {
     observations: Observation[],
+    markAsCompleted: (id: number) => void
 }
 
-const MyTable = ({ observations }: MyTableProps) => {
+const MyTable = ({ observations, markAsCompleted }: MyTableProps) => {
     // Render the table
     const renderTable = () => {
         return observations.map((item, index) => {
@@ -19,7 +20,7 @@ const MyTable = ({ observations }: MyTableProps) => {
                     <td>{item.timestamp}</td>
                     <td>{item.status}</td>
                     <td>
-                        <Button>Mark as completed</Button>
+                        <Button onClick={() => markAsCompleted(item.id)}>Mark as completed</Button>
                     </td>
                 </tr>
             )

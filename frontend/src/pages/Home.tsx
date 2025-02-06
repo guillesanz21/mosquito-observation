@@ -23,20 +23,38 @@ const Home = (props: Props) => {
     const apiUrl = process.env.REACT_APP_API_URL;
     const apiObservationsUrl = `${apiUrl}/api/observations/`;
 
-    React.useEffect(() => {
-        const fetchObservations = async () => {
-            let filterQuery = statusFilter !== "" ? `?status=${statusFilter}` : '';
-            console.log(`${apiObservationsUrl}${filterQuery}`)
-            const { data } = await axios.get(`${apiObservationsUrl}${filterQuery}`);
-            setObservations(data);
-        };
+    const fetchObservations = async () => {
+        let filterQuery = statusFilter !== "" ? `?status=${statusFilter}` : '';
+        const { data } = await axios.get(`${apiObservationsUrl}${filterQuery}`);
+        setObservations(data);
+    };
 
+    React.useEffect(() => {
         fetchObservations();
     }, [statusFilter]);
+
+    React.useEffect(() => {
+        const markAsCompleted = async () => {
+            if (idToUpdate !== null) {
+                await axios.patch(`${apiObservationsUrl}${idToUpdate}/`, {
+                    status: 'complete'
+                });
+                setIdToUpdate(null);
+            }
+        };
+
+        markAsCompleted().then(() => {
+            fetchObservations();
+        });
+    }, [idToUpdate]);
 
 
     const filterByStatus = async (status: string) => {
         setStatusFilter(status);
+    }
+
+    const markAsCompleted = async (id: number) => {
+        setIdToUpdate(id);
     }
 
     return (
@@ -54,7 +72,7 @@ const Home = (props: Props) => {
                     </Form.Select>
 
                 </div>
-                <MyTable observations={observations} />
+                <MyTable observations={observations} markAsCompleted={markAsCompleted} />
             </div>
         </>
     )
