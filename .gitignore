@@ -3,6 +3,17 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# TS dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# TS production
+/build
+
 # C extensions
 *.so
 
